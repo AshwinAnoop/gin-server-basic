@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 
+	"github.com/gin-gonic/gin"
 	"gopkg.in/yaml.v3"
 )
 
@@ -22,6 +24,22 @@ type ServerInfo struct {
 }
 
 func main() {
+
+	router := gin.Default()
+	router.LoadHTMLGlob("templates/*.tmpl")
+	router.GET("/index/server", getServerDetails)
+	router.GET("/index", mainPage)
+	router.Run(":8080")
+}
+
+func mainPage(c *gin.Context) {
+	c.HTML(http.StatusOK, "index.tmpl", gin.H{
+		"title": "Main website",
+	})
+}
+
+func getServerDetails(c *gin.Context) {
+
 	yfile, err := ioutil.ReadFile("test.yaml")
 	if err != nil {
 		log.Fatal(err)
@@ -33,6 +51,16 @@ func main() {
 		log.Fatal(err2)
 	}
 
-	fmt.Print(data)
+	server := c.Query("server")
+	fmt.Print(server)
+	for _, a := range data {
+		if a.Server == server {
+			fmt.Print(a)
+			c.HTML(http.StatusOK, "serverInfo.tmpl", gin.H{
+				"a": a,
+			})
+
+		}
+	}
 
 }
