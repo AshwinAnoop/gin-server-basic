@@ -52,7 +52,6 @@ func getServerDetails(c *gin.Context) {
 	}
 
 	server := c.Query("server")
-	fmt.Print(server)
 	for _, a := range data {
 		if a.Server == server {
 			fmt.Print(a)

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>server Page</title>
+</head>
+<body>
+
+
+
+<h2>
+
+Server : {{ .a.Server }}<br>
+Server Display name : {{ .a.Server_display_name }} <br>
+Server port : {{ .a.Server_port }}<br>
+Server params:<br>
+{{ range .a.Server_params}}
+
+Parameter name : {{ .Parameter_name }}<br>
+Is_default : {{ .Is_default }}<br>
+Parameter type : {{ .Parameter_type }}<br>
+Parameter value : {{ .Parameter_value }}<br>
+<br>
+{{ end }}
+</h2>
+
+</body>
+</html>
